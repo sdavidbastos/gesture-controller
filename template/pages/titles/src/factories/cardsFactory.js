@@ -1,6 +1,6 @@
-import CardsController from "./../controllers/cardsController.js"
-import CardsView from "./../views/cardsView.js"
-import CardsService from "./../services/cardsService.js"
+import CardsController from "../controllers/cardsController.js"
+import CardsView from "../views/cardsView.js"
+import CardsService from "../services/cardsService.js"
 
 const cardListWorker = new Worker(`./src/workers/cardListWorker.js`, {type: "module"})
 const [rootPath] = window.location.href.split('/pages/')
