@@ -20,13 +20,12 @@ export default class Camera {
                 }
             }
         }
-    
         const stream = await navigator.mediaDevices.getUserMedia(videoConfig)
         const camera = new Camera()
         camera.video.srcObject = stream
-        camera.video.height = 240
-        camera.video.width = 320
-        document.body.appendChild(camera.video)
+        // camera.video.height = 240
+        // camera.video.width = 320
+        // document.body.appendChild(camera.video)
 
         //aguarda pela camera
         await new Promise((resolve) =>{
