@@ -7,7 +7,7 @@ import View from "./view.js"
 const service = new Service({
   faceLandmarksDetection: window.faceLandmarksDetection
 })
-const workerPath = "../../script/video-player/worker.js"
+const workerPath = "../../js/video-player/worker.js"
 const worker = await getWorker({ service, workerPath })
 const camera = await Camera.init()
 const factory = {
