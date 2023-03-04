@@ -9,21 +9,24 @@ import HandGestureView from "../views/handGestureView.js"
 import HandGestureService from "../services/handGestureService.js"
 import { Camera } from "../../../lib/shared/index.js"
 import { Gesture } from "../../../lib/shared/index.js"
+import { FINGER_LOCKUP_INDEXES, GESTURE_STRINGS } from "../../../lib/shared/constants.js"
 
 const fingerPose = window.fp
 const camera = await Camera.init()
 const gesture = new Gesture({fingerPose})
-const [rootPath] = window.location.href.split('/pages/')
 const factory = {
   async initialize() {
     return HandGestureController.initialize({
       camera,
-      view: new HandGestureView(),
+      view: new HandGestureView({
+        fingerLookupIndexes: FINGER_LOCKUP_INDEXES,
+      }),
       service: new HandGestureService({
         handPoseDetection: window.handPoseDetection,
         handsVersion: window.VERSION,
+        gestureStrings: GESTURE_STRINGS,
         fingerPose,
-        gesture
+        gesture,
       })
     })
   }

@@ -1,13 +1,9 @@
-import { SCROLL_DOWN, SCROLL_UP } from "./constants.js"
+import { SCROLL_DOWN, SCROLL_UP, CLICK } from "./constants.js"
 export class Gesture {
     #GestureDescription
     #Finger
     #FingerCurl
-    gestureStrings = {
-        [SCROLL_UP]: '🖐',
-        [SCROLL_DOWN]: '✊️'
-    }
-    knowGestures = null
+    knowGestures = []
 
     constructor({ fingerPose }) {
         this.#GestureDescription = fingerPose.GestureDescription
@@ -19,7 +15,7 @@ export class Gesture {
     #init() {
         const ScrollUpGesture = new this.#GestureDescription(SCROLL_UP); // 🖐
         const ScrollDownGesture = new this.#GestureDescription(SCROLL_DOWN); // ✊️
-        this.knowGestures = [ScrollUpGesture, ScrollDownGesture]
+        const ClickGesture = new this.#GestureDescription(CLICK); // 🤏🏻
 
         // Rock
         // -----------------------------------------------------------------------------
@@ -43,6 +39,28 @@ export class Gesture {
         for (let finger of this.#Finger.all) {
             ScrollUpGesture.addCurl(finger, this.#FingerCurl.NoCurl, 1.0);
         }
+
+        //Click
+        // -----------------------------------------------------------------------------
+
+        ClickGesture.addCurl(this.#Finger.Index, this.#FingerCurl.HalfCurl, 0.8)
+        ClickGesture.addCurl(this.#Finger.Index, this.#FingerCurl.FullCurl, 0.5)
+
+        ClickGesture.addCurl(this.#Finger.Thumb, this.#FingerCurl.NoCurl, 1.0)
+        ClickGesture.addCurl(this.#Finger.Thumb, this.#FingerCurl.NoCurl, 0.4)
+
+        ClickGesture.addCurl(this.#Finger.Middle, this.#FingerCurl.HalfCurl, 1.0)
+        ClickGesture.addCurl(this.#Finger.Middle, this.#FingerCurl.FullCurl, 0.9)
+
+        ClickGesture.addCurl(this.#Finger.Ring, this.#FingerCurl.HalfCurl, 1.0)
+        ClickGesture.addCurl(this.#Finger.Ring, this.#FingerCurl.FullCurl, 0.9)
+
+        ClickGesture.addCurl(this.#Finger.Pinky, this.#FingerCurl.HalfCurl, 1.0)
+        ClickGesture.addCurl(this.#Finger.Pinky, this.#FingerCurl.FullCurl, 0.9)
+
+        this.knowGestures = [ScrollUpGesture,
+            ScrollDownGesture,
+            ClickGesture]
 
     }
 

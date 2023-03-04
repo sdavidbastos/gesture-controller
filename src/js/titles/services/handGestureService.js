@@ -2,15 +2,16 @@ export default class HandGestureService {
     #gestureEstimator
     #handPoseDetection
     #handsVersion
-    #gesture
+    #gestureStrings
     #detector = null
     constructor({
         fingerPose,
         handPoseDetection,
         handsVersion,
-        gesture
+        gesture,
+        gestureStrings
     }) {
-        this.#gesture = gesture
+        this.#gestureStrings = gestureStrings
         this.#gestureEstimator = new fingerPose.GestureEstimator(gesture.knowGestures)
         this.#handPoseDetection = handPoseDetection
         this.#handsVersion = handsVersion
@@ -32,7 +33,7 @@ export default class HandGestureService {
             const result = gestures.reduce((previous, current) => (previous.score > current.score) ? previous.score : current.score)
             const {x, y} = hand.keypoints.find(keypoint => keypoint.name === 'index_finger_tip')
             yield {event: result.name, x, y}
-            console.log("[gesture] ", this.#gesture.gestureStrings[result.name])
+            console.log("[gesture] ", this.#gestureStrings[result.name])
         }
     }
 
