@@ -1,10 +1,10 @@
 export default class Camera {
 
-    constructor(){
+    constructor() {
         this.video = document.createElement('video')
     }
-    static async init(){
-        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    static async init() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             throw new Error(
                 "Browser API navigator navigator.mediaDevices.getUserMedia not available"
             )
@@ -28,7 +28,7 @@ export default class Camera {
         // document.body.appendChild(camera.video)
 
         //aguarda pela camera
-        await new Promise((resolve) =>{
+        await new Promise((resolve) => {
             camera.video.onloadedmetadata = () => {
                 resolve(camera.video)
             }
