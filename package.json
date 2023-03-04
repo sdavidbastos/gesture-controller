@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "npx browser-sync -w ./src"
+    "start": "npx browser-sync src -w"
   },
   "keywords": [],
   "author": "erickwendel",

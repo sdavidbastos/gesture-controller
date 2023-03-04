@@ -1,3 +1,5 @@
-import factory from "./factory.js.js";
+import cardsFactory from "./factories/cardsFactory.js";
+import handFactory from "./factories/handGestureFactory.js";
 
-await factory.initialize()
+await handFactory.initialize()
+await cardsFactory.initialize()
