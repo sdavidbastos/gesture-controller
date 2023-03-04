@@ -2,15 +2,13 @@ import Camera from "./camera.js";
 import { prepareRunChecker } from "./utils.js"
 import { getWorker } from "./getWorker.js"
 import {
-gestureStrings,
-knowGestures
+Gesture
 } from "./gesture.js"
 
 
 export {
     Camera,
+    Gesture,
     getWorker,
-    prepareRunChecker,
-    gestureStrings,
-    knowGestures
+    prepareRunChecker
 }

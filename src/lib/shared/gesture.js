@@ -1,45 +1,49 @@
-import {SCROLL_DOWN, SCROLL_UP} from "./constants.js"
-const { GestureDescription, Finger, FingerCurl } = window.fp;
-  
-const ScrollUpGesture = new GestureDescription(SCROLL_UP); // 🖐
-const ScrollDownGesture = new GestureDescription(SCROLL_DOWN); // ✊️
+import { SCROLL_DOWN, SCROLL_UP } from "./constants.js"
+export class Gesture {
+    #GestureDescription
+    #Finger
+    #FingerCurl
+    gestureStrings = {
+        [SCROLL_UP]: '🖐',
+        [SCROLL_DOWN]: '✊️'
+    }
+    knowGestures = null
 
-  
-// Rock
-// -----------------------------------------------------------------------------
-  
-// thumb: half curled
-// accept no curl with a bit lower confidence
-ScrollDownGesture.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-ScrollDownGesture.addCurl(Finger.Thumb, FingerCurl.NoCurl, 0.5);
+    constructor({ fingerPose }) {
+        this.#GestureDescription = fingerPose.GestureDescription
+        this.#Finger = fingerPose.Finger
+        this.#FingerCurl = fingerPose.FingerCurl
+        this.#init()
+    }
 
-// all other fingers: curled
-for(let finger of [Finger.Index, Finger.Middle, Finger.Ring, Finger.Pinky]) {
-    ScrollDownGesture.addCurl(finger, FingerCurl.FullCurl, 1.0);
-    ScrollDownGesture.addCurl(finger, FingerCurl.HalfCurl, 0.9);
-}
+    #init() {
+        const ScrollUpGesture = new this.#GestureDescription(SCROLL_UP); // 🖐
+        const ScrollDownGesture = new this.#GestureDescription(SCROLL_DOWN); // ✊️
+        this.knowGestures = [ScrollUpGesture, ScrollDownGesture]
+
+        // Rock
+        // -----------------------------------------------------------------------------
+
+        // thumb: half curled
+        // accept no curl with a bit lower confidence
+        ScrollDownGesture.addCurl(this.#Finger.Thumb, this.#FingerCurl.HalfCurl, 1.0);
+        ScrollDownGesture.addCurl(this.#Finger.Thumb, this.#FingerCurl.NoCurl, 0.5);
+
+        // all other fingers: curled
+        for (let finger of [this.#Finger.Index, this.#Finger.Middle, this.#Finger.Ring, this.#Finger.Pinky]) {
+            ScrollDownGesture.addCurl(finger, this.#FingerCurl.FullCurl, 1.0);
+            ScrollDownGesture.addCurl(finger, this.#FingerCurl.HalfCurl, 0.9);
+        }
 
 
-// Paper
-// -----------------------------------------------------------------------------
-  
-// no finger should be curled
-for(let finger of Finger.all) {
-    ScrollUpGesture.addCurl(finger, FingerCurl.NoCurl, 1.0);
-}
+        // Paper
+        // -----------------------------------------------------------------------------
 
-const knowGestures = [
-    ScrollDownGesture,
-    ScrollUpGesture,
-    
-]
+        // no finger should be curled
+        for (let finger of this.#Finger.all) {
+            ScrollUpGesture.addCurl(finger, this.#FingerCurl.NoCurl, 1.0);
+        }
 
-const gestureStrings = {
-    [SCROLL_UP]: '🖐',
-    [SCROLL_DOWN]: '✊️'
-}
+    }
 
-export {
-    knowGestures,
-    gestureStrings
 }
