@@ -10,12 +10,14 @@ export function supportsWorkerType() {
     }
 }
 
-export async function getWorker({ service, workerPath }) {
-    if (supportsWorkerType()) {
-        console.log("Initializing esm workers")
-        const worker = new Worker(workerPath, { type: 'module' });
-        return worker
-    }
+
+export function workerSupported({workerPath}) {
+    console.log("Initializing esm workers")
+    const worker = new Worker(workerPath, { type: 'module' });
+    return worker
+}
+
+export async function noWorkerSupported({Service}) {
     console.warn("Your browser doens't support esm modules on webworkers!")
     console.warn("Importing library...")
     await import("https://unpkg.com/@tensorflow/tfjs-core@2.4.0/dist/tf-core.js")
@@ -23,7 +25,11 @@ export async function getWorker({ service, workerPath }) {
     await import("https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.4.0/dist/tf-backend-webgl.js")
     await import("https://unpkg.com/@tensorflow-models/face-landmarks-detection@0.0.1/dist/face-landmarks-detection.js")
     console.warn("Using work mock instead")
-
+    console.log("[mock]loading tf model")
+    const { faceLandmarksDetection } = window
+    const service = new Service({ faceLandmarksDetection })
+    await service.loadModel()
+    console.log("[mock]tf model loaded!")
     const workerMock = {
         async postMessage(video) {
             const blinked = await service.handBlinked(video)
@@ -31,11 +37,8 @@ export async function getWorker({ service, workerPath }) {
             workerMock.onmessage({ data: { blinked } })
         },
         // vai ser sobrescrito pela controller
-        onmessage(msg) { }
+        onmessage(msg) {
+        }
     }
-    console.log("[mock]loading tf model")
-    await service.loadModel()
-    console.log("[mock]tf model loaded!")
-    setTimeout(() => worker.onmessage({ data: 'READY' }), 500)
     return workerMock
 }

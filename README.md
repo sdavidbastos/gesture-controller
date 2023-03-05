@@ -5,7 +5,7 @@ Seja bem vindo(a) à sétima Semana Javascript Expert. Este é o código inicial
 Marque esse projeto com uma estrela 🌟
 
 ## Preview
-<img width=100% src="./assets/demo-template-lg.gif">
+<img width=100% src="./src/assets/demo-template-lg.gif">
 
 ## Pre-reqs
 
@@ -13,7 +13,7 @@ Marque esse projeto com uma estrela 🌟
 
 ## Live demo
 
-- Para testar o projeto final [clique aqui](https://erickwendel.github.io/semana-javascript-expert07/classes/class04/)
+- Para testar o projeto final [clique aqui](https://sdavidbastos.github.io/gesture-controller/src/)
 
 ## Running
 

@@ -1,21 +1,30 @@
 import { Camera } from "../../lib/shared/index.js"
-import { getWorker } from "../../lib/shared/index.js"
+import { workerSupported, noWorkerSupported, supportsWorkerType } from "../../lib/shared/index.js"
 import Controller from "./controller.js"
 import Service from "./service.js"
 import View from "./view.js"
 
-const service = new Service({
-  faceLandmarksDetection: window.faceLandmarksDetection
-})
+let worker
+const supportsWorker = supportsWorkerType()
+const [rootPath] = window.location.href.split('/pages/')
 const workerPath = "../../js/video-player/worker.js"
-const worker = await getWorker({ service, workerPath })
 const camera = await Camera.init()
+const videoUrl = `${rootPath}/assets/video.mp4`
+
+if(supportsWorker){
+  worker = workerSupported({workerPath})
+}
+if(!supportsWorker){
+  worker = await noWorkerSupported({Service})
+  setTimeout(() => worker.onmessage({ data: 'READY' }), 500);
+}
 const factory = {
   async initialize() {
     return Controller.initialize({
       view: new View(),
       camera,
-      worker
+      worker,
+      videoUrl
     })
   }
 }
