@@ -12,14 +12,20 @@ import { Gesture } from "../../../lib/shared/index.js"
 import { FINGER_LOCKUP_INDEXES, GESTURE_STRINGS } from "../../../lib/shared/constants.js"
 
 const fingerPose = window.fp
-const camera = await Camera.init()
+const styler = new PseudoStyler()
 const gesture = new Gesture({fingerPose})
+const camera = await Camera.init()
+gesture.init()
+
+
+
 const factory = {
   async initialize() {
     return HandGestureController.initialize({
       camera,
       view: new HandGestureView({
         fingerLookupIndexes: FINGER_LOCKUP_INDEXES,
+        styler
       }),
       service: new HandGestureService({
         handPoseDetection: window.handPoseDetection,

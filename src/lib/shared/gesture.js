@@ -9,10 +9,9 @@ export class Gesture {
         this.#GestureDescription = fingerPose.GestureDescription
         this.#Finger = fingerPose.Finger
         this.#FingerCurl = fingerPose.FingerCurl
-        this.#init()
     }
 
-    #init() {
+    init() {
         const ScrollUpGesture = new this.#GestureDescription(SCROLL_UP); // 🖐
         const ScrollDownGesture = new this.#GestureDescription(SCROLL_DOWN); // ✊️
         const ClickGesture = new this.#GestureDescription(CLICK); // 🤏🏻
